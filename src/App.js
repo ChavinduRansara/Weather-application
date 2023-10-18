@@ -1,9 +1,17 @@
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {
+  Dashboard,
+  ViewWeatherScreen,
+} from './Routes';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Weather Application</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/:city" element={<ViewWeatherScreen />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
