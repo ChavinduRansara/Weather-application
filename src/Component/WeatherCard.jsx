@@ -1,11 +1,15 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+
 
 const WeatherCard = (props) => {
   
 
   return (
     <div className="flex flex-col h-[17rem] bg-white rounded-lg shadow-lg overflow-hidden w-96">
-      <div className="flex-1 bg-blue-500 p-4 flex flex-col justify-between">
+      <div className="flex-1 bg-blue-500 p-4 flex flex-col justify-between relative">
+      <FontAwesomeIcon icon={faTimes} className="absolute top-4 right-4 text-white cursor-pointer" onClick={props.onClose} />
         <div className="flex justify-between items-center mt-4">
           <div className="ml-8 ">
             <h2 className="text-white text-lg font-semibold">{props.city}, {props.country}</h2>
