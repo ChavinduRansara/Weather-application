@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useHistory } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BgImage from "../Images/HeaderBG.jpg";
 import Logo from "../Images/logo.png";
@@ -13,9 +13,9 @@ function Dashboard() {
   const [weatherData, setWeatherData] = useState([]);
 
   let cityIds = CityData.List.map((city) => city.CityCode);
-  console.log(cityIds);
 
   const dateTimeformatter = (unixTime) => {
+    // Function to format UNIX timestamp
     let milliseconds = unixTime * 1000;
     let dateObject = new Date(milliseconds);
 
@@ -27,6 +27,7 @@ function Dashboard() {
     return [date, time];
   };
 
+  // Function to get weather icon
   const iconBaseUrl = "https://openweathermap.org/img/wn/";
   const geticonUrl = (icon) => {
     return `${iconBaseUrl}${icon}.png`;
@@ -45,6 +46,7 @@ function Dashboard() {
     darkPurple: "4b2f4b",
   };
   const selectcolor = (temp) => {
+    // Function to select color based on temperature
     if (temp < 0) {
       return colors.darkBlue;
     } else if (temp >= 0 && temp < 5) {
@@ -68,13 +70,14 @@ function Dashboard() {
     }
   };
 
-  const q = [1248991, 1850147];
-
   useEffect(() => {
-    const cachedData = JSON.parse(localStorage.getItem("cachedWeatherData"));
+    // Function to fetch weather data
+    const cachedData = JSON.parse(localStorage.getItem("cachedWeatherData"));   
+    // Check if cached data exists and is not older than 5 minutes
     if (cachedData && Date.now() - cachedData.timestamp < 300000) {
       setWeatherData(cachedData.data);
     } else {
+      // Fetch weather data
       axios({
         method: "GET",
         url: `https://api.openweathermap.org/data/2.5/group?id=${cityIds}&units=metric&appid=de90e2d59486272ca441d092b4703b70`,
@@ -84,28 +87,32 @@ function Dashboard() {
             data: res.data.list,
             timestamp: Date.now(),
           };
-          localStorage.setItem("cachedWeatherData", JSON.stringify(cachedData));
-          setWeatherData(res.data.list);
+          localStorage.setItem("cachedWeatherData", JSON.stringify(cachedData)); // set Cache data
+          setWeatherData(res.data.list); // Set weather data
         })
         .catch((err) => {
           console.log(err);
         });
     }
   }, []);
+
   return (
     <div className="bg-cover bg-[#1f2128] min-h-screen flex flex-col">
       <div
+      // Add a background image
         className="bg-cover bg-center h-[85vh] flex-grow relative"
         style={{ backgroundImage: `url(${BgImage})` }}
       >
         <div className="h-full flex flex-col justify-center text-white text-center">
           <div className="container mx-auto mt-[-300px]">
             <h1 className="text-4xl font-semibold mb-4">
-              <img src={Logo} alt="Logo" className="inline-block mr-2 h-12" />{" "}
+              {/* logo and name */}
+              <img src={Logo} alt="Logo" className="inline-block mr-2 h-12" />
               Weather App
             </h1>
           </div>
           <div className="mx-auto">
+            {/* Search bar component */}
             <SearchBar />
           </div>
         </div>
@@ -118,34 +125,34 @@ function Dashboard() {
                 isCardShown[index] && (
                   <div key={index} className="lg:w-[34%] p-6 ">
                     <div>
+                      {/* Use the Link component to navigate to the /:index route */}
                       <Link to={`/${index}`} key={index}>
-                      <WeatherCard
-                        onClose={() => {
-                          const newIsCardShown = [...isCardShown];
-                          newIsCardShown[index] = false;
-                          setIsCardShown(newIsCardShown);
-                        }}
-                        key={index}
-                        city={weather.name}
-                        country={weather.sys.country}
-                        time={dateTimeformatter(weather.dt)}
-                        temperature={Math.round(weather.main.temp)}
-                        url={geticonUrl(weather.weather[0].icon)}
-                        condition={weather.weather[0].main}
-                        minTemp={weather.main.temp_min}
-                        maxTemp={weather.main.temp_max}
-                        pressure={weather.main.pressure}
-                        humidity={weather.main.humidity}
-                        visibility={weather.visibility}
-                        windSpeed={weather.wind.speed}
-                        windDirection={weather.wind.deg}
-                        sunrise={dateTimeformatter(weather.sys.sunrise)}
-                        sunset={dateTimeformatter(weather.sys.sunset)}
-                        color={selectcolor(weather.main.temp)}
-                      />
-                    </Link>
+                        <WeatherCard
+                          onClose={() => {
+                            const newIsCardShown = [...isCardShown];
+                            newIsCardShown[index] = false;
+                            setIsCardShown(newIsCardShown);
+                          }}
+                          key={index}
+                          city={weather.name}
+                          country={weather.sys.country}
+                          time={dateTimeformatter(weather.dt)}
+                          temperature={Math.round(weather.main.temp)}
+                          url={geticonUrl(weather.weather[0].icon)}
+                          condition={weather.weather[0].main}
+                          minTemp={weather.main.temp_min}
+                          maxTemp={weather.main.temp_max}
+                          pressure={weather.main.pressure}
+                          humidity={weather.main.humidity}
+                          visibility={weather.visibility}
+                          windSpeed={weather.wind.speed}
+                          windDirection={weather.wind.deg}
+                          sunrise={dateTimeformatter(weather.sys.sunrise)}
+                          sunset={dateTimeformatter(weather.sys.sunset)}
+                          color={selectcolor(weather.main.temp)}
+                        />
+                      </Link>
                     </div>
-                    
                   </div>
                 )
             )}

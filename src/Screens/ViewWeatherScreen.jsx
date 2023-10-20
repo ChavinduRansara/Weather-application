@@ -3,8 +3,9 @@ import ViewWeather from "../Component/ViewWeather";
 import { useParams } from "react-router-dom";
 
 function ViewWeatherScreen() {
-  const id = useParams();
+  const id = useParams(); // Get the "id" parameter from the URL
 
+  // Function to format UNIX timestamp
   const dateTimeformatter = (unixTime) => {
     let milliseconds = unixTime * 1000;
     let dateObject = new Date(milliseconds);
@@ -18,11 +19,14 @@ function ViewWeatherScreen() {
   };
 
   const iconBaseUrl = "https://openweathermap.org/img/wn/";
+
+  // Function to generate the URL for weather icons
   const geticonUrl = (icon) => {
     return `${iconBaseUrl}${icon}.png`;
   };
 
   const colors = {
+    // Define color codes based on temperature ranges
     lightBlue: "388ee7",
     purple: "6249cc",
     lightGreen: "40b681",
@@ -34,6 +38,8 @@ function ViewWeatherScreen() {
     darkRed: "4b2f2f",
     darkPurple: "4b2f4b",
   };
+
+  // Function to select color based on temperature
   const selectcolor = (temp) => {
     if (temp < 0) {
       return colors.darkBlue;
@@ -58,8 +64,8 @@ function ViewWeatherScreen() {
     }
   };
 
+  // Retrieve cached weather data from local storage
   const cachedData = JSON.parse(localStorage.getItem("cachedWeatherData"));
-
 
   return (
     <div>
