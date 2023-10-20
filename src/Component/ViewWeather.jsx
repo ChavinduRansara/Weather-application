@@ -78,13 +78,13 @@ const ViewWeather = (props) => {
             </div>
             <div className=" px-4 flex justify-center items-center text-center w-[30%]">
               <div>
-                <p className="text-white text-xs"> {props.windSpeed} m/s</p>
+                <p className="text-white text-xs"> {props.windSpeed}m/s {props.windDirection} Degree</p>
               </div>
             </div>
             <div className="pl-10 flex justify-start items-center text-xs w-[35%]">
               <div>
                 <p className="text-white">Sunrise: {props.sunrise[1]} </p>
-                <p className="text-white">Sunset: {props.sunrise[1]} </p>
+                <p className="text-white">Sunset: {props.sunset[1]} </p>
               </div>
             </div>
           </div>
