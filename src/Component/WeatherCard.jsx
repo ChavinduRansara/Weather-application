@@ -7,7 +7,7 @@ const WeatherCard = (props) => {
   
 
   return (
-    <div className="flex flex-col h-[17rem] bg-white rounded-lg shadow-lg overflow-hidden w-96">
+    <div className="flex flex-col h-[17rem] bg-white rounded-lg shadow-lg overflow-hidden w-88">
       <div className="flex-1 bg-blue-500 p-4 flex flex-col justify-between relative">
       <FontAwesomeIcon icon={faTimes} className="absolute top-4 right-4 text-white cursor-pointer" onClick={props.onClose} />
         <div className="flex justify-between items-center mt-4">
