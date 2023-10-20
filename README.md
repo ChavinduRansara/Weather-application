@@ -33,7 +33,7 @@ To run the application, follow these steps:
 
 1. After building the Docker image, you need to run a Docker container with the image you've created. Replace `<port number>` with the desired port number and `<image id>` with the ID of the Docker image you built.
 
-   ```bash
-   docker run -p <port number>:3000 <image id>
+```bash
+docker run -p <port number>:3000 <image id>
 ```
 
