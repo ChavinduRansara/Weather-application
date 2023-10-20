@@ -13,20 +13,20 @@ const SearchBar = () => {
   };
 
   return (
-      <div className="flex items-center p-2 rounded-lg  ">
-        <input
-          type="text"
-          placeholder="Enter a city"
-          value={city}
-          onChange={handleInputChange}
-          className="px-4 py-2 rounded-l-lg text-white bg-[#1f2128] focus:outline-none"
-        />
-        <button
-          onClick={handleAddCity}
-          className="px-4 py-2 rounded-r-lg text-white bg-[#6c5dd3] hover:bg-purple-600 focus:outline-none"
-        >
-          Add City
-        </button>
+    <div className="flex flex-col md:flex-row items-center p-2 rounded-lg">
+      <input
+        type="text"
+        placeholder="Enter a city"
+        value={city}
+        onChange={handleInputChange}
+        className="px-4 py-2 rounded-lg text-white bg-[#1f2128] focus:outline-none w-full md:w-96" // Adjust the width
+      />
+      <button
+        onClick={handleAddCity}
+        className="mt-2 md:mt-0 md:ml-[-10px] px-4 py-2 rounded-lg text-white bg-[#6c5dd3] hover:bg-purple-600 focus:outline-none"
+      >
+        Add City
+      </button>
     </div>
   );
 };

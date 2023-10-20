@@ -8,135 +8,126 @@ import CityData from "../cities.json";
 import axios from "axios";
 
 function Dashboard() {
-  const [isCardShown, setIsCardShown] = useState(true);
-  const [weatherData, setWeatherData] = useState([]); 
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
-  const [time, setTime] = useState("");
-  const [temperature, setTemperature] = useState("");
-  const [condition, setCondition] = useState("");
-  const [minTemp, setMinTemp] = useState("");
-  const [maxTemp, setMaxTemp] = useState("");
-  const [pressure, setPressure] = useState("");
-  const [humidity, setHumidity] = useState("");
-  const [visibility, setVisibility] = useState("");
-  const [windSpeed, setWindSpeed] = useState("");
-  const [windDirection, setWindDirection] = useState("");
-  const [sunrise, setSunrise] = useState("");
-  const [sunset, setSunset] = useState("");
+  const [isCardShown, setIsCardShown] = useState(CityData.List.map(() => true));
+  const [weatherData, setWeatherData] = useState([]);
 
-  let cityIds = CityData.List.map(city => city.CityCode);
+  let cityIds = CityData.List.map((city) => city.CityCode);
   console.log(cityIds);
 
-  const timeformatter = (unixTime) => {
+  const dateTimeformatter = (unixTime) => {
     let milliseconds = unixTime * 1000;
     let dateObject = new Date(milliseconds);
-    const hour = dateObject.getHours();
-    const minute = dateObject.getMinutes();
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    const month = monthNames[dateObject.getMonth()];
+  
+    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: true };
+    const datOptions = { month: 'short', day: 'numeric' };
+    let time = dateObject.toLocaleTimeString('en-US', timeOptions);
+    let date = dateObject.toLocaleDateString('en-US', datOptions);
 
-    // Format the time with 'am' or 'pm'
-    const ampm = hour >= 12 ? "pm" : "am";
-    const formattedHour = hour % 12 === 0 ? 12 : hour % 12; // Convert 0 to 12 for 12-hour format
-
-    // Create the formatted date string
-    const formattedDate = `${formattedHour}.${minute}${ampm}, ${month} ${dateObject.getDate()}`;
-    return formattedDate;
+    return [date, time];
   };
-  const q = [1248991,1850147]
+
+  const colors = {'lightBlue':'388ee7','purple':'6249cc','lightGreen':'40b681','brown':'de944e','red':'9c3a3a','darkBlue':'2f3a4b','darkGreen':'2f4b3a','darkBrown':'4b3a2f','darkRed':'4b2f2f','darkPurple':'4b2f4b'};
+  const selectcolor = (temp) =>{
+    if(temp < 0){
+      return colors.darkBlue;
+    }else if(temp >= 0 && temp < 5){
+      return colors.lightBlue;
+    }else if(temp >= 5 && temp < 10){
+      return colors.darkPurple;
+    }else if(temp >= 10 && temp < 15){
+      return colors.purple;
+    }else if(temp >= 15 && temp < 20){
+      return colors.darkGreen;
+    }else if(temp >= 20 && temp < 25){
+      return colors.lightGreen;
+    }else if(temp >= 25 && temp < 30){
+      return colors.darkBrown;
+    }else if(temp >= 30 && temp < 35){
+      return colors.brown;
+    }else if(temp >= 35 && temp < 40){
+      return colors.darkRed;
+    }else if(temp >= 40){
+      return colors.red;
+    }      
+  }
+  
+  const q = [1248991, 1850147];
 
   useEffect(() => {
-    axios({
-      method: "GET",
-      url: `https://api.openweathermap.org/data/2.5/group?id=${q}&units=metric&appid=de90e2d59486272ca441d092b4703b70`,
-    })
-      .then((res) => {
-        // setCity(res.data.list[0].name);
-        // setCountry(res.data.list[0].sys.country);
-        // setTime(timeformatter(res.data.list[0].dt));
-        // setTemperature(res.data.list[0].main.temp);
-        // setCondition(res.data.list[0].weather[0].main);
-        // setMinTemp(res.data.list[0].main.temp_min);
-        // setMaxTemp(res.data.list[0].main.temp_max);
-        // setPressure(res.data.list[0].main.pressure);
-        // setHumidity(res.data.list[0].main.humidity);
-        // setVisibility(res.data.list[0].visibility);
-        // setWindSpeed(res.data.list[0].wind.speed);
-        // setWindDirection(res.data.list[0].wind.deg);
-        // setSunrise(res.data.list[0].sys.sunrise);
-        // setSunset(res.data.list[0].sys.sunset);
-        setWeatherData(res.data.list);
-        console.log(res.data.list);
+    const cachedData = JSON.parse(localStorage.getItem("cachedWeatherData"));
+    if (cachedData && Date.now() - cachedData.timestamp < 300000) {
+      setWeatherData(cachedData.data);
+    } else {
+      axios({
+        method: "GET",
+        url: `https://api.openweathermap.org/data/2.5/group?id=${cityIds}&units=metric&appid=de90e2d59486272ca441d092b4703b70`,
       })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((res) => {
+          const cachedData = {
+            data: res.data.list,
+            timestamp: Date.now(),
+          };
+          localStorage.setItem("cachedWeatherData", JSON.stringify(cachedData));
+          setWeatherData(res.data.list);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, []);
   return (
     <div className="bg-cover bg-[#1f2128] min-h-screen flex flex-col">
-  <div
-    className="bg-cover bg-center h-[85vh] flex-grow relative"
-    style={{ backgroundImage: `url(${BgImage})` }}
-  >
-    <div className="h-full flex flex-col justify-center text-white text-center">
-      <div className="container mx-auto mt-[-300px]">
-        <h1 className="text-4xl font-semibold mb-4">
-          <img src={Logo} alt="Logo" className="inline-block mr-2 h-12" />{" "}
-          Weather App
-        </h1>
+      <div
+        className="bg-cover bg-center h-[85vh] flex-grow relative"
+        style={{ backgroundImage: `url(${BgImage})` }}
+      >
+        <div className="h-full flex flex-col justify-center text-white text-center">
+          <div className="container mx-auto mt-[-300px]">
+            <h1 className="text-4xl font-semibold mb-4">
+              <img src={Logo} alt="Logo" className="inline-block mr-2 h-12" />{" "}
+              Weather App
+            </h1>
+          </div>
+          <div className="mx-auto">
+            <SearchBar />
+          </div>
+        </div>
       </div>
-      <div className="mx-auto">
-        <SearchBar />
-      </div>
+      {isCardShown && (
+        <div className="mt-[-300px] z-10">
+          <div className="flex flex-wrap justify-center">
+            {weatherData.map((weather, index) => (
+              isCardShown[index] && (
+              <div key={index} className="lg:w-[34%] p-6 ">
+                <WeatherCard
+                  onClose={() => {
+                    const newIsCardShown = [...isCardShown];
+                    newIsCardShown[index] = false;
+                    setIsCardShown(newIsCardShown);
+                  }}
+                  city={weather.name}
+                  country={weather.sys.country}
+                  time={dateTimeformatter(weather.dt)}
+                  temperature={weather.main.temp}
+                  condition={weather.weather[0].main}
+                  minTemp={weather.main.temp_min}
+                  maxTemp={weather.main.temp_max}
+                  pressure={weather.main.pressure}
+                  humidity={weather.main.humidity}
+                  visibility={weather.visibility}
+                  windSpeed={weather.wind.speed}
+                  windDirection={weather.wind.deg}
+                  sunrise={dateTimeformatter(weather.sys.sunrise)}
+                  sunset={dateTimeformatter(weather.sys.sunset)}
+                  color={selectcolor(weather.main.temp)}
+                />
+              </div>
+            )))}
+          </div>
+        </div>
+      )}
+      <Footer />
     </div>
-  </div>
-  {isCardShown && (
-    <div className="mt-[-300px] z-10">
-    <div className="flex flex-wrap justify-center">
-      {weatherData.map((weather, index) => (
-        
-        <div key={index} className="lg:w-[34%] p-6 ">
-        <WeatherCard
-          onClose={() => setIsCardShown(false)}
-          city={weather.name}
-          country={weather.sys.country}
-          time={timeformatter(weather.dt)}
-          temperature={weather.main.temp}
-          condition={weather.weather[0].main}
-          minTemp={weather.main.temp_min}
-          maxTemp={weather.main.temp_max}
-          pressure={weather.main.pressure}
-          humidity={weather.main.humidity}
-          visibility={weather.visibility}
-          windSpeed={weather.wind.speed}
-          windDirection={weather.wind.deg}
-          sunrise={weather.sys.sunrise}
-          sunset={weather.sys.sunset}
-        />
-      </div>
-        
-      ))}
-    </div>
-  </div>
-  )}
-  <Footer />
-</div>
-
-
   );
 }
 

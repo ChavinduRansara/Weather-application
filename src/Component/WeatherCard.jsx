@@ -8,12 +8,14 @@ const WeatherCard = (props) => {
 
   return (
     <div className="flex flex-col h-[17rem] bg-white rounded-lg shadow-lg overflow-hidden w-88">
-      <div className="flex-1 bg-blue-500 p-4 flex flex-col justify-between relative">
+      {console.log(props.color)}
+      <div className="flex-1 bg-blue-500 p-4 flex flex-col justify-between relative"
+      style={{backgroundColor:`#${props.color}`}}>
       <FontAwesomeIcon icon={faTimes} className="absolute top-4 right-4 text-white cursor-pointer" onClick={props.onClose} />
         <div className="flex justify-between items-center mt-4">
           <div className="ml-8 ">
             <h2 className="text-white text-lg font-semibold">{props.city}, {props.country}</h2>
-            <p className="text-white text-xs ">{props.time}</p>
+            <p className="text-white text-xs ">{props.time[1]}, {props.time[0]}</p>
           </div>
           <h1 className="text-white text-4xl font-semibold mr-10">{props.temperature}°c</h1>
         </div>
@@ -35,13 +37,13 @@ const WeatherCard = (props) => {
         </div>
         <div className="border-r border-white px-4 flex items-center">
           <div>
-            <p className="text-white text-xs">Wind Speed km/h</p>
+            <p className="text-white text-xs">Wind Speed: {props.windSpeed} m/s</p>
           </div>
         </div>
         <div className="pl-4 flex items-center text-xs">
           <div>
-            <p className="text-white">Sunrise: 6:05am </p>
-            <p className="text-white">Sunset: 6:05pm </p>
+            <p className="text-white">Sunrise: {props.sunrise[1]} </p>
+            <p className="text-white">Sunset: {props.sunrise[1]} </p>
           </div>
         </div>
       </div>
