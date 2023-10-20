@@ -3,13 +3,14 @@ import React, { useState } from 'react';
 const SearchBar = () => {
   const [city, setCity] = useState('');
 
+  // Handle input change
   const handleInputChange = (event) => {
     setCity(event.target.value);
   };
 
+  // Handle adding a city 
   const handleAddCity = () => {
-    // Add your logic here to add the city
-    console.log(`Adding city: ${city}`);
+    // Add city logic here 
   };
 
   return (
@@ -19,7 +20,7 @@ const SearchBar = () => {
         placeholder="Enter a city"
         value={city}
         onChange={handleInputChange}
-        className="px-4 py-2 rounded-lg text-white bg-[#1f2128] focus:outline-none w-full md:w-96" // Adjust the width
+        className="px-4 py-2 rounded-lg text-white bg-[#1f2128] focus:outline-none w-full md:w-96" 
       />
       <button
         onClick={handleAddCity}
