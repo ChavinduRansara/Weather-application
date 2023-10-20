@@ -8,6 +8,7 @@ import CityData from "../cities.json";
 import axios from "axios";
 
 function Dashboard() {
+  const [isCardShown, setIsCardShown] = useState(true);
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [time, setTime] = useState("");
@@ -94,7 +95,8 @@ function Dashboard() {
           <div className="mx-auto">
             <SearchBar />
           </div>
-          <WeatherCard
+          {isCardShown && <WeatherCard
+            onClose={() => setIsCardShown(false)}
             city={city}
             country={country}
             time={time}
@@ -109,7 +111,7 @@ function Dashboard() {
             windDirection={windDirection}
             sunrise={sunrise}
             sunset={sunset}
-          />
+          />}
         </div>
       </div>
       <Footer />
