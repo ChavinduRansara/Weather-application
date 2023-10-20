@@ -12,10 +12,10 @@ const WeatherCard = (props) => {
       <div
         style={{ backgroundColor: `#${props.color}` }}
         className="flex-1 bg-blue-500 p-4 flex flex-col justify-between relative"
-      >
+      > 
         <FontAwesomeIcon
           icon={faTimes}
-          className="absolute top-4 right-4 text-white cursor-pointer"
+          className="absolute top-4 right-4 text-white cursor-pointer z-30"
           onClick={props.onClose}
         />
         <div className="flex justify-between items-center mt-4">
@@ -56,13 +56,13 @@ const WeatherCard = (props) => {
         </div>
         <div className="border-r border-white px-12 flex items-center ">
           <div>
-            <p className="text-white text-xs">{props.windSpeed} m/s</p>
+            <p className="text-white text-xs">{props.windSpeed}m/s {props.windDirection} Degree</p>
           </div>
         </div>
         <div className="pl-4 flex items-center text-xs">
           <div>
             <p className="text-white">Sunrise: {props.sunrise[1]} </p>
-            <p className="text-white">Sunset: {props.sunrise[1]} </p>
+            <p className="text-white">Sunset: {props.sunset[1]} </p>
           </div>
         </div>
       </div>
