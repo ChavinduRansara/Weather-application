@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useHistory } from "react"
+import { Link } from "react-router-dom";
 import BgImage from "../Images/HeaderBG.jpg";
 import Logo from "../Images/logo.png";
 import Footer from "../Component/Footer";
@@ -26,6 +27,11 @@ function Dashboard() {
     return [date, time];
   };
 
+  const iconBaseUrl = "https://openweathermap.org/img/wn/";
+  const geticonUrl = (icon) => {
+    return `${iconBaseUrl}${icon}.png`;
+  }
+
   const colors = {'lightBlue':'388ee7','purple':'6249cc','lightGreen':'40b681','brown':'de944e','red':'9c3a3a','darkBlue':'2f3a4b','darkGreen':'2f4b3a','darkBrown':'4b3a2f','darkRed':'4b2f2f','darkPurple':'4b2f4b'};
   const selectcolor = (temp) =>{
     if(temp < 0){
@@ -50,7 +56,7 @@ function Dashboard() {
       return colors.red;
     }      
   }
-  
+
   const q = [1248991, 1850147];
 
   useEffect(() => {
@@ -98,17 +104,21 @@ function Dashboard() {
           <div className="flex flex-wrap justify-center">
             {weatherData.map((weather, index) => (
               isCardShown[index] && (
+                
               <div key={index} className="lg:w-[34%] p-6 ">
+                <Link to={`/${index}`} key={index}>
                 <WeatherCard
                   onClose={() => {
                     const newIsCardShown = [...isCardShown];
                     newIsCardShown[index] = false;
                     setIsCardShown(newIsCardShown);
                   }}
+                  key={index}
                   city={weather.name}
                   country={weather.sys.country}
                   time={dateTimeformatter(weather.dt)}
-                  temperature={weather.main.temp}
+                  temperature={Math.round(weather.main.temp)}
+                  url={geticonUrl(weather.weather[0].icon)}
                   condition={weather.weather[0].main}
                   minTemp={weather.main.temp_min}
                   maxTemp={weather.main.temp_max}
@@ -121,7 +131,9 @@ function Dashboard() {
                   sunset={dateTimeformatter(weather.sys.sunset)}
                   color={selectcolor(weather.main.temp)}
                 />
+                </Link>
               </div>
+              
             )))}
           </div>
         </div>
