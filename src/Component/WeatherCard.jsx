@@ -57,15 +57,15 @@ const WeatherCard = (props) => {
         <div className="border-r border-white pr-4 flex items-center">
           <div className="text-[0.55rem] sm:text-xs">
             {/* Display pressure, humidity and visibility */}
-            <p className="text-white">Pressure: {props.pressure}</p>
+            <p className="text-white">Pressure: {props.pressure}hPa</p>
             <p className="text-white">Humidity: {props.humidity}%</p>
-            <p className="text-white">Visibility: {props.visibility} km</p>
+            <p className="text-white">Visibility: {props.visibility}km</p>
           </div>
         </div>
         <div className="border-r border-white px-12 flex items-center ">
           <div>
             {/* Display wind speed and direction */}
-            <p className="text-white text-[0.55rem] sm:text-xs">{props.windSpeed}m/s {props.windDirection} Degree</p>
+            <p className="text-white text-[0.55rem] sm:text-xs">{props.windSpeed}m/s {props.windDirection}Degree</p>
           </div>
         </div>
         <div className="pl-4 flex items-center text-[0.55rem] sm:text-xs">
