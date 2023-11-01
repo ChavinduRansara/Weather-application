@@ -118,12 +118,12 @@ function Dashboard() {
         </div>
       </div>
       {isCardShown && (
-        <div className="mt-[-300px] z-10">
+        <div className="mt-[-350px] z-10">
           <div className="flex flex-wrap justify-center">
             {weatherData.map(
               (weather, index) =>
                 isCardShown[index] && (
-                  <div key={index} className="lg:w-[34%] p-6 ">
+                  <div key={index} className="s1:w-[34%]  p-6 ">
                     <div>
                       {/* Use the Link component to navigate to the /:index route */}
                       <Link to={`/${index}`} key={index}>

@@ -8,10 +8,10 @@ const WeatherCard = (props) => {
   
 
   return (
-    <div className="flex flex-col h-[17rem] bg-white rounded-lg shadow-lg cursor-pointer overflow-hidden w-88">
+    <div className="flex flex-col h-[17rem]  rounded-lg shadow-lg cursor-pointer overflow-hidden">
       <div
         style={{ backgroundColor: `#${props.color}` }}
-        className="flex-1 bg-blue-500 p-4 flex flex-col justify-between relative"
+        className="flex-1 p-4 flex flex-col justify-between relative"
       > 
         {/* close button */}
         <FontAwesomeIcon
@@ -29,7 +29,7 @@ const WeatherCard = (props) => {
             <p className="text-white text-xs ">{props.time[1]}, {props.time[0]}</p>
           </div>
           {/* display temperature */}
-          <h1 className="text-white text-5xl font-semibold mr-10">
+          <h1 className="text-white text-5xl font-semibold mr-10 ">
             {props.temperature}°c
           </h1>
         </div>
@@ -55,7 +55,7 @@ const WeatherCard = (props) => {
       </div>
       <div className="h-24 bg-[#383b47] p-4 flex items-stretch justify-center">
         <div className="border-r border-white pr-4 flex items-center">
-          <div className="text-xs">
+          <div className="text-[0.55rem] sm:text-xs">
             {/* Display pressure, humidity and visibility */}
             <p className="text-white">Pressure: {props.pressure}</p>
             <p className="text-white">Humidity: {props.humidity}%</p>
@@ -65,10 +65,10 @@ const WeatherCard = (props) => {
         <div className="border-r border-white px-12 flex items-center ">
           <div>
             {/* Display wind speed and direction */}
-            <p className="text-white text-xs">{props.windSpeed}m/s {props.windDirection} Degree</p>
+            <p className="text-white text-[0.55rem] sm:text-xs">{props.windSpeed}m/s {props.windDirection} Degree</p>
           </div>
         </div>
-        <div className="pl-4 flex items-center text-xs">
+        <div className="pl-4 flex items-center text-[0.55rem] sm:text-xs">
           <div>
             {/* Display sunrise and sunset time  */}
             <p className="text-white">Sunrise: {props.sunrise[1]} </p>

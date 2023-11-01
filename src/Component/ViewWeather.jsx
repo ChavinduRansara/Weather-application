@@ -27,7 +27,7 @@ const ViewWeather = (props) => {
         <div className="flex flex-col h-[24rem] bg-white rounded-lg shadow-lg overflow-hidden  cursor-pointer z-25 mt-[-450px] w-[80%] lg:w-[50%] mx-auto">
           <div
             style={{ backgroundColor: `#${props.color}` }}
-            className="flex-1 bg-blue-500 p-4 flex flex-col justify-between relative"
+            className="flex-1 p-4 flex flex-col justify-between relative"
           > 
             {/* Add a link to navigate back to the home page */}
             <a href="/">
@@ -72,7 +72,7 @@ const ViewWeather = (props) => {
 
           <div className="h-24 bg-[#383b47] p-4 flex items-stretch justify-between divide-x-2 divide-blue-400">
             <div className=" pr-10 flex justify-end items-center w-[35%]">
-              <div className="text-xs">
+              <div className="text-[0.55rem] sm:text-xs">
                 {/* Display pressure, humidity and visibility */}
                 <p className="text-white">Pressure: {props.pressure}hPa</p>
                 <p className="text-white">Humidity: {props.humidity}%</p>
@@ -82,12 +82,12 @@ const ViewWeather = (props) => {
             <div className=" px-4 flex justify-center items-center text-center w-[30%]">
               <div>
                 {/* Display wind speed and direction */}
-                <p className="text-white text-xs">
+                <p className="text-white text-[0.55rem] sm:text-xs">
                   {props.windSpeed}m/s {props.windDirection} Degree
                 </p>
               </div>
             </div>
-            <div className="pl-10 flex justify-start items-center text-xs w-[35%]">
+            <div className="pl-10 flex justify-start items-center text-[0.55rem] sm:text-xs w-[35%]">
               <div>
                 {/* Display sunrise and sunset time */}
                 <p className="text-white">Sunrise: {props.sunrise[1]} </p>
