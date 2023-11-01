@@ -8,7 +8,7 @@ import WeatherCard from "../Component/WeatherCard";
 import CityData from "../cities.json";
 import axios from "axios";
 import API_URL from "../apiHelper";
-import { selectcolor,dateTimeformatter,geticonUrl } from "../functions";
+import { selectcolor,dateTimeformatter,dateTimeformatterLive,geticonUrl } from "../functions";
 
 function Dashboard() {
   const [isCardShown, setIsCardShown] = useState(CityData.List.map(() => true));
@@ -41,6 +41,7 @@ function Dashboard() {
   }, []);
 
   return (
+    
     <div className="bg-cover bg-[#1f2128] min-h-screen flex flex-col">
       <div
       // Add a background image
@@ -80,7 +81,7 @@ function Dashboard() {
                           key={index}
                           city={weather.name}
                           country={weather.sys.country}
-                          time={dateTimeformatter(weather.dt)}
+                          time={dateTimeformatterLive(weather.sys.timezone)}
                           temperature={Math.round(weather.main.temp)}
                           url={geticonUrl(weather.weather[0].icon)}
                           condition={weather.weather[0].main}
@@ -91,8 +92,8 @@ function Dashboard() {
                           visibility={weather.visibility}
                           windSpeed={weather.wind.speed}
                           windDirection={weather.wind.deg}
-                          sunrise={dateTimeformatter(weather.sys.sunrise)}
-                          sunset={dateTimeformatter(weather.sys.sunset)}
+                          sunrise={dateTimeformatter(weather.sys.sunrise,weather.sys.timezone)}
+                          sunset={dateTimeformatter(weather.sys.sunset,weather.sys.timezone)}
                           color={selectcolor(weather.main.temp)}
                         />
                       </Link>

@@ -1,4 +1,5 @@
 import { ICON_BASE_URL,COLORS } from "./constants";
+import moment from "moment";
 
 export const selectcolor = (temp) => {
     // Function to select color based on temperature
@@ -25,16 +26,17 @@ export const selectcolor = (temp) => {
     }
   };
 
-  export const dateTimeformatter = (unixTime) => {
+  export const dateTimeformatter = (unixTime,timeZone) => {
     // Function to format UNIX timestamp
-    let milliseconds = unixTime * 1000;
-    let dateObject = new Date(milliseconds);
-
-    const timeOptions = { hour: "2-digit", minute: "2-digit", hour12: true };
-    const datOptions = { month: "short", day: "numeric" };
-    let time = dateObject.toLocaleTimeString("en-US", timeOptions);
-    let date = dateObject.toLocaleDateString("en-US", datOptions);
-
+    const time = moment.unix(unixTime).utcOffset(timeZone / 60).format("hh:mm A");
+    const date = moment.unix(unixTime).utcOffset(timeZone / 60).format("MMM DD");
+    return [date, time];
+  };
+  
+  export const dateTimeformatterLive = (timeZone) => {
+    // Function to format UNIX timestamp
+    const time = moment.utc().add(timeZone, 'seconds').format('hh:mm A')
+    const date = moment.utc().add(timeZone, 'seconds').format('MMM DD')
     return [date, time];
   };
 
