@@ -10,6 +10,16 @@ Before using the application, make sure you have the following installed:
 
 - [Docker](https://www.docker.com/)
 
+## Setting Up Environment Variables
+
+Before running the application, you need to configure your environment variables. Follow these steps:
+
+1. Create a `.env` file in the project's root directory if it doesn't already exist.
+2. Open the `.env` file and define your OpenWeatherMap API key as follows:
+```bash
+   REACT_APP_API_KEY = your_weather_api_key
+```
+
 ## Usage
 
 ### 1. Build Docker Image
