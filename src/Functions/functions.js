@@ -1,4 +1,4 @@
-import { ICON_BASE_URL,COLORS } from "./constants";
+import { ICON_BASE_URL,COLORS } from "../Constants/constants";
 import moment from "moment";
 
 export const selectcolor = (temp) => {

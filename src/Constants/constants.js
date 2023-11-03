@@ -1,8 +1,6 @@
-import CityData from "./cities.json";
-
 export const API_KEY = process.env.REACT_APP_API_KEY;
+export const API_URL = `http://api.openweathermap.org/data/2.5/group`;
 export const ICON_BASE_URL = "https://openweathermap.org/img/wn/";
-export const CITY_IDS = CityData.List.map((city) => city.CityCode);
 export const COLORS = {
     lightBlue: "388ee7",
     purple: "6249cc",

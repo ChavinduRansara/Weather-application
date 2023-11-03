@@ -1,7 +1,7 @@
 import React from "react";
 import ViewWeather from "../Component/ViewWeather";
 import { useParams } from "react-router-dom";
-import { dateTimeformatter,dateTimeformatterLive, geticonUrl, selectcolor } from "../functions";
+import { dateTimeformatter,dateTimeformatterLive, geticonUrl, selectcolor } from "../Functions/functions";
 
 function ViewWeatherScreen() {
   const id = useParams(); // Get the "id" parameter from the URL

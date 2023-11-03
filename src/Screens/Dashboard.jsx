@@ -6,38 +6,20 @@ import Footer from "../Component/Footer";
 import SearchBar from "../Component/SearchBar";
 import WeatherCard from "../Component/WeatherCard";
 import CityData from "../cities.json";
-import axios from "axios";
-import API_URL from "../apiHelper";
-import { selectcolor,dateTimeformatter,dateTimeformatterLive,geticonUrl } from "../functions";
+import getWeatherData from "../APIhelper/getWeatherData";
+import { selectcolor,dateTimeformatter,dateTimeformatterLive,geticonUrl } from "../Functions/functions";
 
 function Dashboard() {
   const [isCardShown, setIsCardShown] = useState(CityData.List.map(() => true));
   const [weatherData, setWeatherData] = useState([]);
 
+  // Fetch weather data from the API
+  const fetchWeatherData = async () => {
+    setWeatherData(await getWeatherData());
+  }
+
   useEffect(() => {
-    // Function to fetch weather data
-    const cachedData = JSON.parse(localStorage.getItem("cachedWeatherData"));   
-    // Check if cached data exists and is not older than 5 minutes
-    if (cachedData && Date.now() - cachedData.timestamp < 300000) {
-      setWeatherData(cachedData.data);
-    } else {
-      // Fetch weather data
-      axios({
-        method: "GET",
-        url: API_URL,
-      })
-        .then((res) => {
-          const cachedData = {
-            data: res.data.list,
-            timestamp: Date.now(),
-          };
-          localStorage.setItem("cachedWeatherData", JSON.stringify(cachedData)); // set Cache data
-          setWeatherData(res.data.list); // Set weather data
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    fetchWeatherData();
   }, []);
 
   return (
