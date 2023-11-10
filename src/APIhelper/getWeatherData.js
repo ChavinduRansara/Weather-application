@@ -21,21 +21,22 @@ const getWeatherData = async () => {
 
     const apiParameters = new URLSearchParams(parameters);
 
-    // Fetch weather data
-    axios
-      .get(`${API_URL}?${apiParameters}`)
-      .then((res) => {
-        const cachedData = {
-          data: res.data.list,
-          timestamp: Date.now(),
-        };
-        localStorage.setItem("cachedWeatherData", JSON.stringify(cachedData)); // set Cache data
-        return res.data.list;
-      })
-      .catch((err) => {
-        console.log(err);
-        return [];
-      });
+    try {
+      // Fetch weather data
+      const response = await axios.get(`${API_URL}?${apiParameters}`);
+
+      const newData = {
+        data: response.data.list,
+        timestamp: Date.now(),
+      };
+
+      localStorage.setItem("cachedWeatherData", JSON.stringify(newData)); // set Cache data
+
+      return newData.data;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
   }
 };
 
