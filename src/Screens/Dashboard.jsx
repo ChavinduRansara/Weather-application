@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import BgImage from "../Images/HeaderBG.jpg";
 import Logo from "../Images/logo.png";
@@ -14,13 +14,13 @@ function Dashboard() {
   const [weatherData, setWeatherData] = useState([]);
 
   // Fetch weather data from the API
-  const fetchWeatherData = async () => {
+  const fetchWeatherData = useCallback(async () => {
     setWeatherData(await getWeatherData());
-  }
+  },[])
 
   useEffect(() => {
     fetchWeatherData();
-  }, []);
+  }, [fetchWeatherData]);
 
   return (
     
@@ -47,11 +47,13 @@ function Dashboard() {
       {isCardShown && (
         <div className="mt-[-350px] z-10">
           <div className="flex flex-wrap justify-center">
+          {console.log(weatherData)}
             {weatherData.map(
               (weather, index) =>
                 isCardShown[index] && (
                   <div key={index} className="s1:w-[34%]  p-6 ">
                     <div>
+                      {console.log(weather)}
                       {/* Use the Link component to navigate to the /:index route */}
                       <Link to={`/${index}`} key={index}>
                         <WeatherCard
